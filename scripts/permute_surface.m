@@ -22,7 +22,7 @@ distfun = @(a,b) sqrt(bsxfun(@minus,bsxfun(@plus,sum(a.^2,2),sum(b.^2,1)),2*(a*b
 
 subj_dir = sprintf('%s%s/', output_dir, subject_id);
 
-if ~exit(subj_dir, 'dir')
+if ~exist(subj_dir, 'dir')
     mkdir(subj_dir);
 end
 
