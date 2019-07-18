@@ -5,7 +5,7 @@ disp(permno)
 disp(surface_dir)
 disp(output_dir)
 
-subject_id = char(subject_id);
+subject_id = num2str(subject_id);
 permno = str2double(permno);
 
 left_surf_file = sprintf('%s%s.L.sphere.32k_fs_LR.surf.gii', surface_dir, subject_id);
