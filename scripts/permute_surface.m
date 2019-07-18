@@ -1,5 +1,8 @@
 function permute_surface(subject_id, permno, surface_dir, output_dir)
 
+subject_id = char(subject_id);
+permno = str2double(permno);
+
 left_surf_file = sprintf('%s%s.L.sphere.32k_fs_LR.surf.gii', surface_dir, subject_id);
 surfl = gifti(left_surf_file);
 verticesl = surfl.vertices;
