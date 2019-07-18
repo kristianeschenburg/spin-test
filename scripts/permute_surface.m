@@ -6,7 +6,8 @@ disp(surface_dir)
 disp(output_dir)
 
 subject_id = num2str(subject_id);
-permno = str2double(permno);
+permno = num2str(permno);
+permno = str2num(permno);
 
 left_surf_file = sprintf('%s%s.L.sphere.32k_fs_LR.surf.gii', surface_dir, subject_id);
 surfl = gifti(left_surf_file);
@@ -31,9 +32,12 @@ if ~exist(subj_dir, 'dir')
     mkdir(subj_dir);
 end
 
-for j=1:permno
+for j = 1:permno
     
     rotl_file = sprintf('%sRotation.L.%i.mat', output_dir, j);
+    disp(j)
+    disp(class(j))
+    disp(rotl_file)
     load(rotl_file)
     
     rotr_file = sprintf('%sRotation.R.%i.mat', output_dir, j);
