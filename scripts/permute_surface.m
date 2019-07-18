@@ -1,6 +1,6 @@
 function permute_surface(subject_id, permno, surface_dir, output_dir)
 
-disp(subj_id)
+disp(subject_id)
 disp(permno)
 disp(surface_dir)
 disp(output_dir)
