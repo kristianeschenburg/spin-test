@@ -20,6 +20,12 @@ br=verticesr;
 
 distfun = @(a,b) sqrt(bsxfun(@minus,bsxfun(@plus,sum(a.^2,2),sum(b.^2,1)),2*(a*b)));
 
+subj_dir = sprintf('%s%s/', output_dir, subject_id);
+
+if ~exit(subj_dir, 'dir')
+    mkdir(subj_dir);
+end
+
 for j=1:permno
     
     rotl_file = sprintf('%sRotation.L.%i.mat', output_dir, j);
@@ -31,8 +37,8 @@ for j=1:permno
     bl =bl*TL;
     br = br*TR;
     
-    left_out = sprintf('%s%s/%s.L.sphere.32k_fs_LR.Rotation.%i.mat', output_dir, subject_id, subject_id, j);
-    right_out = sprintf('%s%s/%s.R.sphere.32k_fs_LR.Rotation.%i.mat', output_dir, subject_id, subject_id, j);
+    left_out = sprintf('%s%s.L.sphere.32k_fs_LR.Rotation.%i.mat', subj_dir, subject_id, j);
+    right_out = sprintf('%s%s.R.sphere.32k_fs_LR.Rotation.%i.mat', subj_dir, subject_id, j);
     save(left_out, 'bl', '-v7.3');
     save(right_out, 'br', '-v7.3');
     
@@ -47,8 +53,8 @@ for j=1:permno
     rotl = datal(Il)';
     rotr =  datar(Ir)';
     
-    left_out = sprintf('%s%s/%s.L.Indices.Rotation.%i.mat', output_dir, subject_id, subject_id, j);
-    right_out = sprintf('%s%s/%s.R.Indices.Rotation.%i.mat', output_dir, subject_id, subject_id, j);
+    left_out = sprintf('%s%s.L.Indices.Rotation.%i.mat', subj_dir, subject_id, j);
+    right_out = sprintf('%s%s.R.Indices.Rotation.%i.mat', subj_dir, subject_id, j);
     save(left_out, 'rotl', '-v7.3');
     save(right_out, 'rotr', '-v7.3');
     
