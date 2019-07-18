@@ -1,5 +1,10 @@
 function permute_surface(subject_id, permno, surface_dir, output_dir)
 
+disp(subj_id)
+disp(permno)
+disp(surface_dir)
+disp(output_dir)
+
 subject_id = char(subject_id);
 permno = str2double(permno);
 
