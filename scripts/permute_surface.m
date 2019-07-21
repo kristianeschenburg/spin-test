@@ -1,10 +1,5 @@
 function permute_surface(subject_id, permno, data_dir)
 
-disp(subject_id)
-disp(permno)
-disp(surface_dir)
-disp(output_dir)
-
 subject_id = num2str(subject_id);
 permno = num2str(permno);
 permno = str2num(permno);
