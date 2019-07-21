@@ -26,7 +26,7 @@ br=verticesr;
 
 distfun = @(a,b) sqrt(bsxfun(@minus,bsxfun(@plus,sum(a.^2,2),sum(b.^2,1)),2*(a*b)));
 
-rot_dir = sprintf('%s/SurfacePermutations/Rotations', data_dir);
+rot_dir = sprintf('%sSurfacePermutations/Rotations', data_dir);
 subj_dir = sprintf('%sSurfacePermutations/%s', data_dir, subject_id);
 
 if ~exist(subj_dir, 'dir')
