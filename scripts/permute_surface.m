@@ -1,4 +1,4 @@
-function permute_surface(subject_id, permno, surface_dir, output_dir)
+function permute_surface(subject_id, permno, data_dir)
 
 disp(subject_id)
 disp(permno)
@@ -9,12 +9,12 @@ subject_id = num2str(subject_id);
 permno = num2str(permno);
 permno = str2num(permno);
 
-left_surf_file = sprintf('%s%s.L.sphere.32k_fs_LR.surf.gii', surface_dir, subject_id);
+left_surf_file = sprintf('%sSurfaces/%s.L.sphere.32k_fs_LR.surf.gii', data_dir, subject_id);
 surfl = gifti(left_surf_file);
 verticesl = surfl.vertices;
 datal = 1:size(verticesl, 1);
 
-right_surf_file = sprintf('%s%s.R.sphere.32k_fs_LR.surf.gii', surface_dir, subject_id);
+right_surf_file = sprintf('%sSurfaces/%s.R.sphere.32k_fs_LR.surf.gii', data_dir, subject_id);
 surfr = gifti(right_surf_file);
 verticesr = surfr.vertices;
 datar = 1:size(verticesr, 1);
@@ -26,7 +26,8 @@ br=verticesr;
 
 distfun = @(a,b) sqrt(bsxfun(@minus,bsxfun(@plus,sum(a.^2,2),sum(b.^2,1)),2*(a*b)));
 
-subj_dir = sprintf('%s%s/', output_dir, subject_id);
+rot_dir = sprintf('%s/SurfacePermutations/Rotations', data_dir);
+subj_dir = sprintf('%sSurfacePermutations/%s', data_dir, subject_id);
 
 if ~exist(subj_dir, 'dir')
     mkdir(subj_dir);
@@ -34,20 +35,20 @@ end
 
 for j = 1:permno
     
-    rotl_file = sprintf('%sRotation.L.%i.mat', output_dir, j);
-    disp(j)
-    disp(class(j))
-    disp(rotl_file)
+    rotl_file = sprintf('%s/Rotation.L.%i.mat', rot_dir, j);
     load(rotl_file)
     
-    rotr_file = sprintf('%sRotation.R.%i.mat', output_dir, j);
+    rotr_file = sprintf('%s/Rotation.R.%i.mat', rot_dir, j);
     load(rotr_file)
 
     bl =bl*TL;
     br = br*TR;
-    
-    left_out = sprintf('%s%s.L.sphere.32k_fs_LR.Rotation.%i.mat', subj_dir, subject_id, j);
-    right_out = sprintf('%s%s.R.sphere.32k_fs_LR.Rotation.%i.mat', subj_dir, subject_id, j);
+
+    left_suffix = sprintf('%s.L.sphere.32k_fs_LR.Rotation.%i.mat', subject_id, j);
+    right_suffix = sprintf('%s.R.sphere.32k_fs_LR.Rotation.%i.mat', subject_id, j);
+    left_out = sprintf('%s/%s', subj_dir, left_suffix);
+    right_out = sprintf('%s/%s', subj_dir, right_suffix);
+
     save(left_out, 'bl', '-v7.3');
     save(right_out, 'br', '-v7.3');
     
@@ -62,8 +63,11 @@ for j = 1:permno
     rotl = datal(Il)';
     rotr =  datar(Ir)';
     
-    left_out = sprintf('%s%s.L.Indices.Rotation.%i.mat', subj_dir, subject_id, j);
-    right_out = sprintf('%s%s.R.Indices.Rotation.%i.mat', subj_dir, subject_id, j);
+    left_suffix = sprintf('%s.L.Indices.Rotation.%i.mat', subject_id, j);
+    right_suffix = sprintf('%s.R.Indices.Rotation.%i.mat', subject_id, j);
+    left_out = sprintf('%s/%s', subj_dir, left_suffix);
+    right_out = sprintf('%s/%s', subj_dir, right_suffix);
+
     save(left_out, 'rotl', '-v7.3');
     save(right_out, 'rotr', '-v7.3');
     
